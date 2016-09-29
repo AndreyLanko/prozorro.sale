@@ -5,6 +5,8 @@
     {!!$html['popup']!!}
 @endsection
 
+@include('partials/header-sale')
+
 @section('html_footer')
     {!!$html['footer']!!}
 @endsection
