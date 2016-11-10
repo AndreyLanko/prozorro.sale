@@ -38,10 +38,10 @@ var DATE_SELECTED=[];
 			date_end,
 			format='dd.mm.yyyy',
 			date_types={
-				tender: 'Дата приймання пропозиц',
-				enquiry: 'Дата периоду уточнень',
 				auction: 'Дата аукціону',
-				award: 'Дата кваліфікації'				
+				award: 'Дата award',
+				enquiry: 'Дата enquiry',
+				tender: 'Дата tender'
 			},
 			current_date_type;
 
@@ -64,7 +64,7 @@ var DATE_SELECTED=[];
 		}
 
 		var query_types={
-			order: 400,
+			order: 1000,
 			self: this,
 			prefix: 'date',
 			name: 'Дата начала приема предложений',
@@ -85,7 +85,6 @@ var DATE_SELECTED=[];
 
 				date_start=$(dates[0]);
 				date_end=$(dates[1]);
-//                $.fn.datepicker.defaults.language = 'ua';
 
 				dates.datepicker({
 					autoclose: true,

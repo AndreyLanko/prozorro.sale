@@ -7,18 +7,19 @@
 		var _block;
 	
 		var query_types={
-			order: 700,
-			prefix: 'procedure_t',
+			order: 200,
+			prefix: 'award_criteria',
 			pattern_search: /^(.*?)$/,
-			template: $('#block-procedure_t'),
+			//pattern_exact: /^\d{1,8}-\d{1}$/,
+			template: $('#block-award_criteria'),
 			json: {
-				check: '/form/check/procedure_t'
+				check: '/form/check/award_criteria'
 			},
 			load: function(){
 				if(!json){
 					$.ajax({
 						method: 'POST',
-						url: LANG+'/form/data/procedure_t',
+						url: LANG+'/form/data/award_criteria',
 						dataType: 'json',
 						headers: APP.utils.csrf(),
 						success: function(response){
@@ -30,7 +31,7 @@
 			init: function(input_query, block){
 				var input=block.find('select'),
 					preselected_value=block.data('preselected_value');
-	
+
 				_block=block;
 	
 				input.selectize({
@@ -71,13 +72,13 @@
 
 							this.$control_input.val(input_query);
 							this.$control_input.trigger('update');
-
+							
 							this.$control_input.focus();
 						}
 					},
 					onType: function(text){
 						_block[!this.currentResults.items.length?'addClass':'removeClass']('no-results');
-					},
+					},					
 					onChange: function(value){
 						INPUT.focus();
 						APP.utils.query();
@@ -93,7 +94,7 @@
 				var value=_block.find('[data-value]').data('value');
 
 				return value!='' ? value : false;
-			}
+			}		
 		}
 		
 		return query_types;

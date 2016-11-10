@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
     <meta name="csrf-token" content="{{csrf_token()}}" />
-    <title>{{env('HTML_TITLE', '')}}Prozorro</title>
+    <title>{{env('HTML_TITLE', '')}}ProZorro.Sale</title>
     
     
     <!--[if lt IE 9]>
@@ -14,7 +14,7 @@
     <![endif]-->
     <link rel='shortcut icon' type='image/x-icon' href='/assets/images/favicon.ico' />
     
-    <link href='http://fonts.googleapis.com' rel='dns-prefetch'>
+    <link href='//fonts.googleapis.com' rel='dns-prefetch'>
     <link href='/assets/sales/wp-content/themes/monstroid/assets/css/first-ver=1.1.3.css' id='monstroid-first-screen-css' media='all' rel='stylesheet' type='text/css'>
     <link href='/assets/sales/wp-content/plugins/cherry-blog-layouts/public/assets/css/style-ver=1.0.5.css'id='cherry-blog-style-css' media='all' rel='stylesheet' type='text/css'>
     <link href='/assets/sales/wp-content/plugins/cherry-portfolio/public/assets/css/style-ver=1.0.4.5.css'id='cherry-portfolio-css' media='all' rel='stylesheet' type='text/css'>
@@ -28,7 +28,7 @@
     <link href='/assets/sales/wp-content/plugins/woocommerce/assets/css/woocommerce-smallscreen-ver=2.6.2.css'id='woocommerce-smallscreen-css' media='only screen and (max-width: 768px)'rel='stylesheet' type='text/css'>
     <link href='/assets/sales/wp-content/plugins/woocommerce/assets/css/woocommerce-ver=2.6.2.css' id='woocommerce-general-css' media='all' rel='stylesheet' type='text/css'>
     
-    <link href='http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css?ver=4.4.0'id='font-awesome-css' media='all' rel='stylesheet' type='text/css'>
+    <link href='//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css?ver=4.4.0'id='font-awesome-css' media='all' rel='stylesheet' type='text/css'>
     
     <link href='/assets/sales/wp-content/plugins/cherry-mega-menu/public/assets/css/style-ver=1.0.4.css'id='' media='all' rel='stylesheet' type='text/css'>
     <link href='/assets/sales/wp-content/plugins/cherry-shortcodes/assets/css/swiper-ver=1.0.7.5.css'id='swiper-css' media='all' rel='stylesheet' type='text/css'>
@@ -55,7 +55,7 @@
         
     @yield('head')
 </head>
-<body  class="home page page-id-357 page-template-default woocommerce-product-lightbox-enabled no-padding cherry-responsive cherry-no-sidebar"dir="ltr">
+<body  class="home page page-id-357 page-template-default woocommerce-product-lightbox-enabled no-padding cherry-responsive cherry-no-sidebar @yield('bodyclass')" dir="ltr">
     @if (env('GA_CODE'))
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -116,13 +116,13 @@
     <script src='/assets/sales/wp-content/plugins/contact-form-7/includes/js/jquery.form.min.js?ver=3.51.0-2014.06.20'type='text/javascript'></script> 
     <script type='text/javascript'>
         /* <![CDATA[ */
-        var _wpcf7 = {"loaderUrl":"http:\/\/www.prozorro.sale\/wp-content\/themes\/monstroid\/assets\/images\/loading-spin.svg","recaptchaEmpty":"Please verify that you are not a robot.","sending":"Sending ..."};
+        var _wpcf7 = {"loaderUrl":"\/\/wp-content\/themes\/monstroid\/assets\/images\/loading-spin.svg","recaptchaEmpty":"Please verify that you are not a robot.","sending":"Sending ..."};
         /* ]]> */
     </script> 
     <script src='/assets/sales/wp-content/plugins/contact-form-7/includes/js/scripts.js?ver=4.4.2' type='text/javascript'></script> 
     <script type='text/javascript'>
         /* <![CDATA[ */
-        var wc_add_to_cart_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/?wc-ajax=%%endpoint%%","i18n_view_cart":"View Cart","cart_url":"http:\/\/www.prozorro.sale\/cart__trashed\/","is_cart":"","cart_redirect_after_add":"no"};
+        var wc_add_to_cart_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/?wc-ajax=%%endpoint%%","i18n_view_cart":"View Cart","cart_url":"\/\/cart__trashed\/","is_cart":"","cart_redirect_after_add":"no"};
         /* ]]> */
     </script> 
     <script src='/assets/sales/wp-content/plugins/woocommerce/assets/js/frontend/add-to-cart.min.js?ver=2.6.2'type='text/javascript'></script> 
@@ -142,21 +142,21 @@
     <script src='/assets/sales/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=2.6.2'type='text/javascript'></script> 
     <script type='text/javascript'>
         /* <![CDATA[ */
-        var yith_woocompare = {"ajaxurl":"\/?wc-ajax=%%endpoint%%","actionadd":"yith-woocompare-add-product","actionremove":"yith-woocompare-remove-product","actionview":"yith-woocompare-view-table","added_label":"Added","table_title":"Product Comparison","auto_open":"no","loader":"http:\/\/www.prozorro.sale\/wp-content\/plugins\/yith-woocommerce-compare\/assets\/images\/loader.gif","button_text":"Compare"};
+        var yith_woocompare = {"ajaxurl":"\/?wc-ajax=%%endpoint%%","actionadd":"yith-woocompare-add-product","actionremove":"yith-woocompare-remove-product","actionview":"yith-woocompare-view-table","added_label":"Added","table_title":"Product Comparison","auto_open":"no","loader":"\/\/wp-content\/plugins\/yith-woocommerce-compare\/assets\/images\/loader.gif","button_text":"Compare"};
         /* ]]> */
     </script> 
     <script src='/assets/sales/wp-content/plugins/yith-woocommerce-compare/assets/js/woocompare.js?ver=2.0.9'type='text/javascript'></script> 
     <script src='/assets/sales/wp-content/plugins/yith-woocommerce-compare/assets/js/jquery.colorbox-min.js?ver=1.4.21'type='text/javascript'></script> 
     <script type='text/javascript'>
         /* <![CDATA[ */
-        var yith_qv = {"ajaxurl":"http:\/\/www.prozorro.sale\/wp-admin\/admin-ajax.php","is2_2":"","loader":"http:\/\/www.prozorro.sale\/wp-content\/plugins\/yith-woocommerce-quick-view\/assets\/image\/qv-loader.gif"};
+        var yith_qv = {"ajaxurl":"\/\/wp-admin\/admin-ajax.php","is2_2":"","loader":"\/\/wp-content\/plugins\/yith-woocommerce-quick-view\/assets\/image\/qv-loader.gif"};
         /* ]]> */
     </script> 
     <script src='/assets/sales/wp-content/plugins/yith-woocommerce-quick-view/assets/js/frontend.min.js?ver=1.1.2'type='text/javascript'></script> 
     <script src='/assets/sales/wp-content/plugins/yith-woocommerce-wishlist/assets/js/jquery.selectBox.min.js?ver=1.2.0'type='text/javascript'></script> 
     <script type='text/javascript'>
         /* <![CDATA[ */
-        var yith_wcwl_l10n = {"ajax_url":"\/wp-admin\/admin-ajax.php","redirect_to_cart":"no","multi_wishlist":"","hide_add_button":"1","is_user_logged_in":"","ajax_loader_url":"http:\/\/www.prozorro.sale\/wp-content\/plugins\/yith-woocommerce-wishlist\/assets\/images\/ajax-loader.gif","remove_from_wishlist_after_add_to_cart":"yes","labels":{"cookie_disabled":"We are sorry, but this feature is available only if cookies are enabled on your browser.","added_to_cart_message":"<div class=\"woocommerce-message\">Product correctly added to cart<\/div>"},"actions":{"add_to_wishlist_action":"add_to_wishlist","remove_from_wishlist_action":"remove_from_wishlist","move_to_another_wishlist_action":"move_to_another_wishlsit","reload_wishlist_and_adding_elem_action":"reload_wishlist_and_adding_elem"}};
+        var yith_wcwl_l10n = {"ajax_url":"\/wp-admin\/admin-ajax.php","redirect_to_cart":"no","multi_wishlist":"","hide_add_button":"1","is_user_logged_in":"","ajax_loader_url":"\/\/wp-content\/plugins\/yith-woocommerce-wishlist\/assets\/images\/ajax-loader.gif","remove_from_wishlist_after_add_to_cart":"yes","labels":{"cookie_disabled":"We are sorry, but this feature is available only if cookies are enabled on your browser.","added_to_cart_message":"<div class=\"woocommerce-message\">Product correctly added to cart<\/div>"},"actions":{"add_to_wishlist_action":"add_to_wishlist","remove_from_wishlist_action":"remove_from_wishlist","move_to_another_wishlist_action":"move_to_another_wishlsit","reload_wishlist_and_adding_elem_action":"reload_wishlist_and_adding_elem"}};
         /* ]]> */
     </script> 
     <script src='/assets/sales/wp-content/plugins/yith-woocommerce-wishlist/assets/js/jquery.yith-wcwl.js?ver=2.0.16'type='text/javascript'></script> 

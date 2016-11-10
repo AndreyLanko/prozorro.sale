@@ -1,5 +1,5 @@
 <?php
     return [
-        'tender'=>env('API_TENDER'),
+        'auction'=>env('API_AUCTION'),
         'plan'=>env('API_PLAN')
     ];

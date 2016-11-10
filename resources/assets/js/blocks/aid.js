@@ -4,14 +4,14 @@
  
 	var BLOCK = function(){
 		var _input,
-			pattern=/^UA\-20\d{2}\-\d{2}\-\d{2}\-\d{6}$/,			
+			pattern=/^UA\-EA\-20\d{2}\-\d{2}\-\d{2}\-\d{6}$/,
 			_value;
 	
 		var query_types={
-			order: 300,
-			prefix: 'tid',
+			order: 100,
+			prefix: 'aid',
 			pattern_search: pattern,
-			template: $('#block-tid'),
+			template: $('#block-aid'),
 			init: function(input_query, block){
 				var preselected_value=block.data('preselected_value');
 
@@ -55,7 +55,7 @@
 				return _value;
 			},
 			validate: function(query){
-				var valid='UA-2015-01-01-000001';
+				var valid='UA-EA-2016-01-01-000001';
 
 				return pattern.test(query+valid.substr(query.length));
 			}			

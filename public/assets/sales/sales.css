@@ -1,6 +1,6 @@
 @media (min-width: 993px) {
     .site-title {
-        text-align: center;
+        text-align: left;
     }
 }
 .title_box-362 .title-box_title {
@@ -111,7 +111,10 @@ body .site-footer {
     color: #302e33;
     font: 500 74px/90px Ubuntu,sans-serif;
 }
-
+.site-content h2.line-height-80, .site-content .h2.line-height-80,
+.site-footer h2.line-height-80, .site-footer .h2.line-height-80  {
+    line-height: 80px;
+}
 .site-content h3,.site-content .h3,
 .site-footer h3,.site-footer .h3 {
     letter-spacing: 0;
@@ -1834,4 +1837,8 @@ body .grid-layout.grid-type-3 .entry-title:before,body .masonry-layout.masonry-t
         margin-bottom: 40px;
         border-bottom: 1px solid #f0f0f0;
     }
+}
+.widget-title a:link, .widget-title a:visited{
+    color:#FFF;
+    text-decoration: none;
 }

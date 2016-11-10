@@ -3,8 +3,23 @@
 		<div class="items-list--item clearfix">
 			<div class="row clearfix">
 				<div class="col-md-8">
-					{{--dump($item)--}}
-                    <a href="/tender/{{$item->tenderID}}/" class="items-list--header"><i class="sprite-{{$item->__icon}}-icon"></i><span class="cell">{{!empty($item->title) ? $item->title : trans('facebook.tender_no_name')}}</span></a>
+                    <a href="/auction/{{$item->auctionID}}/" class="margin-bottom items-list--header"><i class="sprite-{{$item->__icon}}-icon"></i><span class="cell">{{!empty($item->title) ? $item->title : trans('facebook.tender_no_name')}}</span></a>
+                    @if(!empty($item->dgfID))
+                        <div class="items-list-item-description" style="margin-left:40px; color:#F69378">
+                            № лоту: {{ $item->dgfID }}
+                        </div>
+                    @endif
+                    @if(!empty($item->items))
+                        <div class="items-list-item-description" style="margin-left:40px">
+                            @foreach($item->items as $one)
+                                @if (!empty($one->description))
+                                    <div class="margin-bottom">
+                                        {!!nl2br($one->description)!!}
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                    @endif
 					<div class="clearfix"></div>
 					<ol class="breadcrumb">
 						<li>{{$item->__icon=='pen' ? trans('tender.pen') : trans('tender.online')}}</li>
@@ -14,6 +29,9 @@
 						@endif
 					</ol>
 					@if (!empty($item->description))
+        					<div class="items-list-item-description">
+            					Лот виставляється на торги:
+            				</div>
 						<div class="description-wr{{mb_strlen($item->description)>350?' croped':' open'}}">
 							@if ($item->description)
 								<div class="description"><p>{{$item->description}}</p></div>
@@ -32,7 +50,7 @@
 							<strong>{{trans('interface.company')}}:</strong> {{$item->procuringEntity->name}}
 						</div>
 					@endif
-					<div class="items-list--tem-id"><strong>ID:</strong> {{$item->tenderID}}</div>
+					<div class="items-list--tem-id"><strong>ID:</strong> {{$item->auctionID}}</div>
 				</div>
 				<div class="col-md-4 relative">	
 					{{--
@@ -47,6 +65,9 @@
 					@if (!empty($item->enquiryPeriod->startDate))
 						<div class="items-list--item--date"><strong>{{trans('tender.start_date')}}:</strong> {{date('d.m.Y', strtotime($item->enquiryPeriod->startDate))}}</div>
 					@endif
+        				@if(!empty($item->__illustration->url))
+                        <img src="{{ $item->__illustration->url }}" width="200">
+                    @endif
 				</div>
 			</div>
 			{{--

@@ -20,7 +20,7 @@
             <div>Статус: {{trans('tender.lot_status.'.$item->status)}}</div>	        
     	        @if (!empty($item->value))
     	            <div>
-    	                Очікувана вартість: <strong>{{number_format($item->value->amount, 0, '', ' ')}} <span class="small">{{$item->value->currency}}</span></strong>
+    	                Початкова ціна реалізації лоту: <strong>{{number_format($item->value->amount, 0, '', ' ')}} <span class="small">{{$item->value->currency}}</span></strong>
     	                @if($item->value->valueAddedTaxIncluded)
     	                    з ПДВ
     	                @else
@@ -38,10 +38,7 @@
                 </div>
             @endif
             @if (!empty($item->guarantee) && (int) $item->guarantee->amount>0)
-               <div>Вид тендерного забезпечення: <strong>Електронна банківська гарантія</strong></div>
-               <div>Сума тендерного забезпечення: <strong>{{str_replace('.00', '', number_format($item->guarantee->amount, 2, '.', ' '))}} {{$item->guarantee->currency}}</strong></div>
-            @else
-                <div>Вид тендерного забезпечення: <strong>Відсутній</strong></div>
+               <div>Сума гарантійного внеску: <strong>{{str_replace('.00', '', number_format($item->guarantee->amount, 2, '.', ' '))}} {{$item->guarantee->currency}}</strong></div>
             @endif
         </div>
         @if (!empty($item->auctionPeriod->startDate) || !empty($item->auctionPeriod->endDate) || !empty($item->auctionUrl))

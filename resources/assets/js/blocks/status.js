@@ -7,7 +7,7 @@
 		var _block;
 	
 		var query_types={
-			order: 600,
+			order: 800,
 			prefix: 'status',
 			pattern_search: /^(.*?)$/,
 			//pattern_exact: /^\d{1,8}-\d{1}$/,

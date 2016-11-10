@@ -1,5 +1,5 @@
 <div class="col-sm-9 margin-bottom margin-bottom-more">    
-    <h3>Інформація про предмет закупівлі</h3>
+    <h3>Лот виставляється на торги:</h3>
     <div class="row">
         @if (!empty($item->description))
             <div class="col-md-12 description-wr margin-bottom">
@@ -16,9 +16,9 @@
             </div>
         @endif
         @if(!empty($item->items) && !$item->__isMultiLot)
-            <div class="col-md-12 margin-bottom padding-side"><strong>Опис окремої частини або частин предмета закупівлі</strong></div>
+            <div class="col-md-12 margin-bottom padding-side"><strong>Опис активу</strong></div>
             @foreach($item->items as $one)
-                <div class="row margin-bottom">
+                <div class="margin-bottom">
                     <div class="col-md-4 col-md-push-8">
                         <div class="padding margin-bottom">
                             {{!empty($one->quantity)?$one->quantity:''}} @if(!empty($one->unit->code)){{trans('measures.'.$one->unit->code.'.symbol')}}@endif
