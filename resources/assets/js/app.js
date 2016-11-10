@@ -1046,12 +1046,13 @@ var APP,
                     for(var i=0; i<window.query_types.length; i++){
                         if(typeof window.query_types[i] === 'function'){
                             var type=window.query_types[i]();
-                            
+
                             if(typeof type.validate === 'function' && type.validate(query)){
                                 types.push(type);
                             } else if(type.pattern_search.test(query)){
                                 types.push(type);
                             }
+                            
                         }
                     }
 

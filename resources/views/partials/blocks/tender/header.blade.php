@@ -1,7 +1,13 @@
     <div class="tender--head gray-bg">
         <div class="container">
-            <div class="tender--head--title col-sm-9">{{!empty($item->title) ? $item->title : trans('facebook.tender_no_name')}}</div>
-
+            <div class="tender--head--title col-sm-9">
+                <div>{{!empty($item->title) ? $item->title : trans('facebook.tender_no_name')}}</div>
+                @if(!empty($item->dgfID))
+                    <div class="items-list-item-description" style="color:#F69378">
+                        № лоту: {{ $item->dgfID }}
+                    </div>
+                @endif
+            </div>
             <div class="col-md-3 col-sm-3 tender--description--cost--wr">
                 @if (!empty($item->value))
                     <div class="gray-bg padding margin-bottom tender--description--cost">
@@ -12,9 +18,23 @@
                     </div>
                 @endif
             </div>
-                
+            @if(!empty($item->items) && !$item->__isMultiLot)
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="tender--head--inf">
+                        @foreach($item->items as $one)
+                            @if (!empty($one->description))
+                                <div class="margin-bottom">
+                                    {!!nl2br($one->description)!!}
+                                </div>
+                            @endif
+                        @endforeach
+                        </div>
+                    </div>
+                </div>
+            @endif
             <div class="row">
-                <div class="col-sm-9">
+                <div class="col-md-9">
                     <div class="tender--head--inf">
                         {{$item->tenderID}} ● {{$item->id}}
                     </div>
@@ -53,7 +73,7 @@
                             </div>
                         </div>
                     @else
-                        <div>Електронний цифровий підпис не накладено</div>
+                        {{--<div>Електронний цифровий підпис не накладено</div>--}}
                     @endif
                 </div>
                 
@@ -108,15 +128,6 @@
                                     <a href="" class="tender--offers--ancor"><i class="sprite-props"></i> {{trans('tender.bids')}}</a>
                                 </li>
                             @endif
-
-                            {{--
-                            <li>
-                                <a href=""><i class="sprite-share"></i> Поділитись</a>
-                            </li>
-                            <li>
-                                <a href=""><i class="sprite-link"></i> Скопіювати посилання</a>
-                            </li>
-                            --}}
                         </ul>
                         @if(!empty($item->procuringEntity->contactPoint->name) || !empty($item->procuringEntity->contactPoint->email))
                             <p><strong>{{trans('tender.contacts')}}</strong></p>
@@ -129,6 +140,9 @@
                             @if(!empty($item->procuringEntity->contactPoint->email))
                                 <small><a href="mailto:{{$item->procuringEntity->contactPoint->email}}" class="word-break">{{$item->procuringEntity->contactPoint->email}}</a></small>
                             @endif
+                        @endif
+                        @if(!empty($item->__illustration->url))
+                            <img src="{{$item->__illustration->url}}">
                         @endif
                     </div>
                 </div>

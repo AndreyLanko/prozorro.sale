@@ -1,6 +1,6 @@
 <div class="container documents-tabs">
     <div class="col-sm-9 tender--customer--inner margin-bottom margin-bottom-more">
-        <h3>Тендерна документація</h3>
+        <h3>Документація аукціону</h3>
 
         @if (!empty($item->__tender_documents))
             @if(!empty($item->__tender_documents_stroked))

@@ -351,7 +351,7 @@ body {
     color: #EEE;
 }
 .block-query input[type="text"],
-.block-tid input[type="text"] {
+.block-aid input[type="text"] {
 	display: inline-block;
 	width: auto;
 	background-color: transparent;

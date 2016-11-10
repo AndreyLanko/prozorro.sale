@@ -1,14 +1,13 @@
 @extends('layouts/app')
 
 @section('html_header')
+    @include('partials/header-sale-inside')
     {!!$html['header']!!}
     {!!$html['popup']!!}
 @endsection
 
-@include('partials/header-sale')
-
 @section('html_footer')
-    {!!$html['footer']!!}
+    @include('partials/footer')
 @endsection
 
 @section('content')

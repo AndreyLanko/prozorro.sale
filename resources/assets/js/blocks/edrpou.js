@@ -5,7 +5,7 @@
 		var _block;
 	
 		var query_types={
-			order: 500,
+			order: 400,
 			prefix: 'edrpou',
 			pattern_search: /^(.*?)$/,
 			pattern_exact: /^\d{1,9}$/,

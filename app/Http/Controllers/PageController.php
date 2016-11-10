@@ -15,6 +15,66 @@ use Lang;
 
 class PageController extends BaseController
 {
+    public function team($slug)
+    {
+        $team=[
+            (object)[
+                'slug'=>'moto',
+                'name'=>'Андрій Мотовиловець',
+                'meta'=>'<span class="team-meta_item position">Проектний менеджер</span><span class="team-meta_item location">Київ</span>'
+            ],
+            (object)[
+                'slug'=>'krykun',
+                'name'=>'Федір Крикун',
+                'meta'=>'<span class="team-meta_item position">Координація співпраці зі ЗМІ</span><span class="team-meta_item location">Київ</span><span class="team-meta_item email"><a href="mailto:fkrykun@gmail.com" class="team-email-link">fkrykun@gmail.com</a></span>'
+            ],
+            (object)[
+                'slug'=>'nefedov',
+                'name'=>'Максим Нефьодов',
+                'meta'=>'<div class="team-meta"><span class="team-meta_item position">Заступник Міністра економічного розвитку і торгівлі України</span><span class="team-meta_item location">Київ</span><span class="team-meta_item website"><a href="https://www.facebook.com/max.nefyodov" class="team-website" rel="nofollow">Personal website</a></span>'
+            ],
+            (object)[
+                'slug'=>'rak',
+                'name'=>'Оксана Рак',
+                'meta'=>'<span class="team-meta_item position">Юрист</span><span class="team-meta_item location">Київ</span><span class="team-meta_item email"><a href="mailto:oksana.rak2015@gmail.com" class="team-email-link">oksana.rak2015@gmail.com</a></span>'
+            ],
+            (object)[
+                'slug'=>'homich',
+                'name'=>'Вадим Хомич',
+                'meta'=>'<span class="team-meta_item position">Спеціаліст з моніторингу</span><span class="team-meta_item location">Київ</span><span class="team-meta_item email"><a href="mailto:vhomych@gmail.com" class="team-email-link">vhomych@gmail.com</a></span>'
+            ],
+            (object)[
+                'slug'=>'coolic',
+                'name'=>'Сергій Кулік',
+                'meta'=>'<div class="team-meta"><span class="team-meta_item position">Координація розробки ІТ системи</span><span class="team-meta_item location">Київ</span><span class="team-meta_item telephone">+38 (050) 381 59 49</span><span class="team-meta_item email"><a href="mailto:s.coolic@gmail.com" class="team-email-link">s.coolic@gmail.com</a></span>'
+            ],
+            (object)[
+                'slug'=>'sobolev',
+                'name'=>'Олексій Соболев',
+                'meta'=>'<div class="team-meta"><span class="team-meta_item position">Керiвник проекту</span><span class="team-meta_item location">Київ</span><span class="team-meta_item telephone">+38 (067) 442 82 47</span><span class="team-meta_item email"><a href="mailto:alex.sobolev@gmail.com" class="team-email-link">alex.sobolev@gmail.com</a></span>'
+            ],
+        ];
+
+        $team=array_first($team, function($k, $one) use($slug){
+            return $one->slug==$slug;
+        });
+        
+        if(!$team)
+            abort(404);
+
+        return view('pages/team')
+                ->with('html', $this->get_html())
+                ->with('team', $team)
+                ->render();
+    }
+
+    public function aim()
+    {
+        return view('pages/aim')
+                ->with('html', $this->get_html())
+                ->render();
+    }
+
     public function home()
     {
         $last=null;
@@ -27,7 +87,7 @@ class PageController extends BaseController
 
         return view('pages/home')
                 ->with('html', $this->get_html())
-                ->with('search_type', 'tender')
+                ->with('search_type', 'auction')
                 ->with('dataStatus', $dataStatus)
                 ->with('auctions', $auctions_items)
                 ->with('numbers', $this->parseBiNumbers(Config::get('bi-numbers')))
@@ -36,12 +96,12 @@ class PageController extends BaseController
     
     function search_redirect()
     {
-        return Redirect::to(str_replace('/search', '/tender/search', Request::fullUrl()), 301);
+        return Redirect::to(str_replace('/search', '/auction/search', Request::fullUrl()), 301);
     }
     
     var $search_type;
     
-    public function search($search_type='tender')
+    public function search($search_type='auction')
     {
         $this->search_type=$this->get_search_type($search_type);
         list($query_array, $preselected_values)=$this->parse_search_query();
@@ -103,9 +163,9 @@ class PageController extends BaseController
         return [$query_array, $preselected_values];
     }
     
-    private function get_search_type($search_type='tender')
+    private function get_search_type($search_type='auction')
     {
-        return in_array($search_type, ['tender', 'plan'])?$search_type:'tender';
+        return in_array($search_type, ['auction', 'plan'])?$search_type:'auction';
     }
     
     public function plan($id)
@@ -217,7 +277,7 @@ class PageController extends BaseController
 
         $item=$this->tender_parse($id);
 
-        return view('pages/tender')
+        return view('pages/auction')
                 ->with('item', $item)
                 ->with('html', $this->get_html())
                 ->with('back', starts_with(Request::server('HTTP_REFERER'), env('ROOT_URL').'/search') ? Request::server('HTTP_REFERER') : false)
@@ -229,10 +289,10 @@ class PageController extends BaseController
 
     public function tender_parse($id)
     {
-        $this->search_type='tender';
+        $this->search_type='auction';
         $this->error=false;
 
-        $json=$this->getSearchResults(['tid='.$id]);
+        $json=$this->getSearchResults(['aid='.$id]);
         $item=false;
 
         if($json)
@@ -258,6 +318,8 @@ class PageController extends BaseController
                     ->with('error', $this->error);
             }
         }
+
+        $item->tenderID=$item->auctionID;
 
         if(empty($item->procurementMethodType))
         {
@@ -369,7 +431,7 @@ class PageController extends BaseController
         $this->parse_eu($item);
 
         $item->__icon=new \StdClass();
-        $item->__icon=starts_with($item->tenderID, 'ocds-random-ua')?'pen':'mouse';
+        $item->__icon=starts_with($item->auctionID, 'ocds-random-ua')?'pen':'mouse';
 
         $this->get_active_apply($item);
         $this->get_contracts($item, !empty($item->contracts) ? $item->contracts : false);
@@ -398,11 +460,28 @@ class PageController extends BaseController
         $this->get_action_url_singlelot($item);
         $this->get_auction_period($item);
         $this->get_button_007($item, $item->procuringEntity);
+        $this->parse_items($item);
+        $this->get_illustration($item);
         
         if(isset($_GET['dump']) && getenv('APP_ENV')=='local')
             dd($item);
 
         return $item;
+    }
+    
+    public function parse_items(&$item)
+    {
+        $item->__items=$item->items;
+
+        foreach($item->__items as $one)
+        {
+            $one->deliveryAddress=
+                (!empty($one->address->countryName) ? $one->address->countryName.', ' : '').
+                (!empty($one->address->locality) ? $one->address->locality.', ' : '').
+                (!empty($one->address->postalCode) ? $one->address->postalCode.', ' : '').
+                (!empty($one->address->region) ? $one->address->region.', ' : '').
+                (!empty($one->address->streetAddress) ? $one->address->streetAddress : '');
+        }
     }
     
     public function get_auction_period(&$item)
@@ -577,6 +656,26 @@ class PageController extends BaseController
         });
 
         return $out;
+    }
+    
+    private function get_illustration(&$item)
+    {
+        if(!empty($item->documents))
+        {
+            $illustration=array_first($item->documents, function($k, $document){
+                return !empty($document->documentType) && $document->documentType=='illustration';
+            });
+
+            if(empty($illustration)){
+                $illustration=array_first($item->documents, function($k, $document){
+                    return !empty($document->format) && $document->format=='image/jpeg';
+                });
+            }
+            
+            if(!empty($illustration)){
+                $item->__illustration=$illustration;
+            }
+        }
     }
     
     private function get_initial_bids(&$item)
@@ -1609,7 +1708,7 @@ class PageController extends BaseController
                     });
                 }
 
-                $lot->tenderID=$item->tenderID;
+                $lot->auctionID=$item->auctionID;
 
                 $this->get_uniqie_awards($lot);
                 $this->get_uniqie_bids($lot, true);
@@ -1970,6 +2069,8 @@ class PageController extends BaseController
         
     private function get_procedure(&$item)
     {
+        $name='Процедура без назви';
+        
         if($item->procurementMethod=='open' && $item->procurementMethodType=='belowThreshold')
             $name='Допорогові закупівлі';
 

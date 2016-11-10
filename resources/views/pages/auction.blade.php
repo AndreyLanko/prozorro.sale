@@ -7,11 +7,13 @@
         <meta property="og:title" content="{{htmlentities($item->procuringEntity->name, ENT_QUOTES)}}">
         <meta property="og:url" content="{{env('ROOT_URL')}}/{{Request::path()}}">
         <meta property="og:image" content="{{env('ROOT_URL')}}/assets/images/social/fb.png">
-        <meta property="og:description" content="{{!empty($item->title) ? htmlentities($item->title, ENT_QUOTES) : trans('facebook.tender_no_name')}}">
+        <meta property="og:description" content="{{!empty($item->description) ? htmlentities($item->description, ENT_QUOTES) : trans('facebook.tender_no_name')}}">
     @endif
 @endsection
 
 @section('html_header')
+    @include('partials/header-sale-inside')
+
     @if (!empty($html))
         {!!$html['header']!!}
         {!!$html['popup']!!}
@@ -19,6 +21,8 @@
 @endsection
 
 @section('html_footer')
+    @include('partials/footer')
+    
     @if (!empty($html))
         {!!$html['footer']!!}
     @endif
@@ -43,28 +47,19 @@
                                     @if(!empty($item->__open_name))
                                         <h2>{{$item->__open_name}}</h2>
                                     @endif
-                                    
-                                    @if($item->__print_href && !in_array($item->procurementMethodType, ['negotiation', 'negotiation.quick']))
-                                        @if(starts_with($item->__print_href, 'limited'))
-                                            @if(empty($item->__active_award))
-                                                <div style="margin-top:-30px;margin-bottom:40px">Для друку форми необхідно завершити дії на майданчику</div>
-                                            @else
-                                                <div style="margin-top:-30px;margin-bottom:40px">Друкувати форму оголошення <a href="{{href('tender/'.$item->tenderID.'/print/'.$item->__print_href.'/pdf')}}" target="_blank">PDF</a> ● <a href="{{href('tender/'.$item->tenderID.'/print/'.$item->__print_href.'/html')}}" target="_blank">HTML</a></div>
-                                            @endif
-                                        @else
-                                            <div style="margin-top:-30px;margin-bottom:40px">Друкувати форму оголошення <a href="{{href('tender/'.$item->tenderID.'/print/'.$item->__print_href.'/pdf')}}" target="_blank">PDF</a> ● <a href="{{href('tender/'.$item->tenderID.'/print/'.$item->__print_href.'/html')}}" target="_blank">HTML</a></div>
-                                        @endif
-                                    @endif
                                 @else
                                     <h2></h2>
+                                @endif
+                                @if(in_array($item->status, ['unsuccessful', 'cancelled', 'complete']))
+                                    <div style="margin-top:0px;margin-bottom:40px">Друкувати протокол електронних торгів <a href="{{href('auction/'.$item->tenderID.'/print/protocol/pdf')}}" target="_blank">PDF</a> ● <a href="{{href('auction/'.$item->tenderID.'/print/protocol/html')}}" target="_blank">HTML</a></div>
                                 @endif
 
                                 @if ($item->__isSingleLot)
                                     @if(in_array($item->status, ['complete', 'unsuccessful', 'cancelled']) && $item->procurementMethod=='open' && in_array($item->procurementMethodType, ['aboveThresholdUA', 'aboveThresholdEU', 'aboveThresholdUA.defense']))
-                                        <div style="margin-top:-30px;margin-bottom:40px">Друкувати звіт про результати проведення процедури <a href="{{href('tender/'.$item->tenderID.'/print/report/pdf')}}" target="_blank">PDF</a> ● <a href="{{href('tender/'.$item->tenderID.'/print/report/html')}}" target="_blank">HTML</a></div>
+                                        <div style="margin-top:-30px;margin-bottom:40px">Друкувати звіт про результати проведення процедури <a href="{{href('auction/'.$item->tenderID.'/print/report/pdf')}}" target="_blank">PDF</a> ● <a href="{{href('auction/'.$item->tenderID.'/print/report/html')}}" target="_blank">HTML</a></div>
                                     @endif
                                     @if(in_array($item->status, ['complete', 'cancelled']) && $item->procurementMethod=='limited' && in_array($item->procurementMethodType, ['negotiation', 'negotiation.quick']))
-                                        <div style="margin-top:-30px;margin-bottom:40px">Друкувати звіт про результати проведення процедури <a href="{{href('tender/'.$item->tenderID.'/print/report/pdf')}}" target="_blank">PDF</a> ● <a href="{{href('tender/'.$item->tenderID.'/print/report/html')}}" target="_blank">HTML</a></div>
+                                        <div style="margin-top:-30px;margin-bottom:40px">Друкувати звіт про результати проведення процедури <a href="{{href('auction/'.$item->tenderID.'/print/report/pdf')}}" target="_blank">PDF</a> ● <a href="{{href('auction/'.$item->tenderID.'/print/report/html')}}" target="_blank">HTML</a></div>
                                     @endif
                                 @endif
     
@@ -90,7 +85,7 @@
     
     
                                 @if (!empty($item->__complaints_claims) ||!empty($item->__questions))
-                                    <h2>Роз’яснення до процедури</h2>
+                                    <h2>Роз’яснення до аукціону</h2>
     
                                     {{--Запитання до процедури--}}
                                     @include('partials/blocks/tender/questions')
@@ -158,10 +153,10 @@
                                     ])
 
                                     @if(in_array($lot->status, ['complete', 'unsuccessful', 'cancelled']) && $item->procurementMethod=='open' && in_array($item->procurementMethodType, ['aboveThresholdUA', 'aboveThresholdEU', 'aboveThresholdUA.defense']))
-                                        <div style="margin-top:-20px;margin-bottom:40px">Друкувати звіт про результати проведення процедури <a href="{{href('tender/'.$item->tenderID.'/print/report/pdf/'.$lot->id)}}" target="_blank">PDF</a> ● <a href="{{href('tender/'.$item->tenderID.'/print/report/html/'.$lot->id)}}" target="_blank">HTML</a></div>
+                                        <div style="margin-top:-20px;margin-bottom:40px">Друкувати звіт про результати проведення процедури <a href="{{href('auction/'.$item->tenderID.'/print/report/pdf/'.$lot->id)}}" target="_blank">PDF</a> ● <a href="{{href('auction/'.$item->tenderID.'/print/report/html/'.$lot->id)}}" target="_blank">HTML</a></div>
                                     @endif
                                     @if(in_array($lot->status, ['complete', 'cancelled']) && $item->procurementMethod=='limited' && in_array($item->procurementMethodType, ['negotiation', 'negotiation.quick']))
-                                        <div style="margin-top:-20px;margin-bottom:40px">Друкувати звіт про результати проведення процедури <a href="{{href('tender/'.$item->tenderID.'/print/report/pdf/'.$lot->id)}}" target="_blank">PDF</a> ● <a href="{{href('tender/'.$item->tenderID.'/print/report/html/'.$lot->id)}}" target="_blank">HTML</a></div>
+                                        <div style="margin-top:-20px;margin-bottom:40px">Друкувати звіт про результати проведення процедури <a href="{{href('auction/'.$item->tenderID.'/print/report/pdf/'.$lot->id)}}" target="_blank">PDF</a> ● <a href="{{href('auction/'.$item->tenderID.'/print/report/html/'.$lot->id)}}" target="_blank">HTML</a></div>
                                     @endif
     
                                     {{--Позиції--}}

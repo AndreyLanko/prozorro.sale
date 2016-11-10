@@ -1,6 +1,5 @@
 @if($item->procurementMethod=='open' || ($item->procurementMethod=='limited' && in_array($item->procurementMethodType, ['negotiation', 'negotiation.quick'])))
     <div class="col-sm-9 tender--customer--inner margin-bottom margin-bottom-more">
-        <h3>Інформація про процедуру</h3>
         <div class="row">
             <table class="tender--customer margin-bottom">
                 <tbody>
@@ -37,36 +36,20 @@
                         @endif
                         @if (!empty($item->value->amount))
                             <tr>
-                                <td class="col-sm-8"><strong>Очікувана вартість:</strong></td>
+                                <td class="col-sm-8"><strong>Початкова ціна реалізації лоту:</strong></td>
                                 <td class="col-sm-4">{{number_format($item->value->amount, 0, '', ' ')}} {{$item->value->currency}} {{!empty($item->value->valueAddedTaxIncluded)?'з ПДВ':'без ПДВ'}}</td>
                             </tr>
                         @endif
-    
-                        @if (!empty($item->guarantee) && (int) $item->guarantee->amount>0)
-                            <tr>
-                                <td class="col-sm-8"><strong>Вид тендерного забезпечення:</strong></td>
-                                <td class="col-sm-4">Електронна банківська гарантія</td>
-                            </tr>
-                            <tr>
-                                <td class="col-sm-8"><strong>Сума тендерного забезпечення:</strong></td>
-                                <td class="col-sm-4">{{str_replace('.00', '', number_format($item->guarantee->amount, 2, '.', ' '))}} {{$item->guarantee->currency}}</td>
-                            </tr>
-                        @else
-                            <tr>
-                                <td class="col-sm-8"><strong>Вид тендерного забезпечення:</strong></td>
-                                <td class="col-sm-4">Відсутній</td>
-                            </tr>
-                        @endif
-                        @if(empty($item->lots) || sizeof($item->lots)==1)
+                            @if(empty($item->lots) || sizeof($item->lots)==1)
                             @if (!empty($item->minimalStep->amount))
                                 <tr>
-                                    <td class="col-sm-8"><strong>Розмір мінімального кроку пониження ціни:</strong></td>
+                                    <td class="col-sm-8"><strong>Розмір мінімального кроку підвищення:</strong></td>
                                     <td class="col-sm-4">{{number_format($item->minimalStep->amount, 0, '', ' ')}} {{$item->minimalStep->currency}}</td>
                                 </tr>
                             @endif
                             @if (!empty($item->value->amount && !empty($item->minimalStep->amount)))
                                 <tr>
-                                    <td class="col-sm-8"><strong>Розмір мінімального кроку пониження ціни, %:</strong></td>
+                                    <td class="col-sm-8"><strong>Розмір мінімального кроку підвищення ціни, %:</strong></td>
                                     <td class="col-sm-4">{{str_replace('.00', '', number_format(($item->minimalStep->amount/$item->value->amount)*100, 2, '.', ' '))}} %</td>
                                 </tr>
                             @endif

@@ -8,6 +8,7 @@ use App;
 class PrintController extends BaseController
 {
     var $types=[
+        'protocol',
         'open',
         'limited',
         'limited-reporting',
@@ -144,7 +145,7 @@ class PrintController extends BaseController
         {
             $pdf=\App::make('dompdf.wrapper');
     
-            $pdf->loadView('pages/print/tender/'.$type, [
+            $pdf->loadView('pages/print/auction/'.$type, [
                 'item'=>$item,
                 'lot_id'=>$lot_id
             ]);
@@ -152,7 +153,7 @@ class PrintController extends BaseController
             return $pdf->stream();
         }
         
-        return view('pages/print/tender/'.$type)
+        return view('pages/print/auction/'.$type)
                 ->with('item', $item)
                 ->with('lot_id', $lot_id);
 	}

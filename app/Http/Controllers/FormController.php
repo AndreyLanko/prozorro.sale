@@ -10,20 +10,12 @@ use Illuminate\Routing\Controller as BaseController;
 class FormController extends BaseController
 {
     public $blocks=[
-        'cpv',
-        'date',
-        'dkpp',
-        'edrpou',
-        'region',
-        'procedure_t',
-        'procedure_p',
-        'status',
-        'tid'
+        'aid', 'award_criteria', 'cav', 'edrpou', 'proc_type', 'procedure', 'region', 'status', 'date'
     ];
     
-    public $search_type='tender';
+    public $search_type='auction';
 
-    public function search($search_type='tender')
+    public function search($search_type='auction')
     {
         $this->search_type=$search_type;
 
@@ -45,7 +37,11 @@ class FormController extends BaseController
         if($query)
         {
             $json=$this->getSearchResults($query);
+
             $data=json_decode($json);
+
+            if(isset($_GET['raw']) && getenv('APP_ENV')=='local')
+                dd($data);
 
             if(!empty($data->items))
             {
@@ -68,15 +64,32 @@ class FormController extends BaseController
         return $out;
     }
 
-    private function prepareTender($data)
+    private function prepareAuction($data)
     {
         $dataStatus=[];
 
         foreach($data->items as $k=>$item)
         {
             $item->__icon=new \StdClass();
-            $item->__icon=starts_with($item->tenderID, 'ocds-random-ua')?'pen':'mouse';
+            $item->__icon=starts_with($item->auctionID, 'ocds-random-ua')?'pen':'mouse';
             
+            if(!empty($item->documents))
+            {
+                $illustration=array_first($item->documents, function($k, $document){
+                    return !empty($document->documentType) && $document->documentType=='illustration';
+                });
+    
+                if(empty($illustration)){
+                    $illustration=array_first($item->documents, function($k, $document){
+                        return !empty($document->format) && $document->format=='image/jpeg';
+                    });
+                }
+                
+                if(!empty($illustration)){
+                    $item->__illustration=$illustration;
+                }
+            }
+
             $data->items[$k]=$item;
         }
         
@@ -120,14 +133,14 @@ class FormController extends BaseController
 
         foreach($query as $k=>$q)
         {
-            if(starts_with($q, ['procedure_t', 'procedure_p']))
+            if(starts_with($q, ['procedure']))
             {
                 $url=explode('=', $q, 2);
                 unset($query[$k]);
                 foreach(explode(',', $url[1]) as $u)
                     $query[]='proc_type='.$u;
             }
-            elseif(substr($q, 0, 4)=='cpv=')
+            elseif(substr($q, 0, 4)=='cav=')
             {
                 $url=explode('=', $q, 2);
                 $cpv=explode('-', $url[1]);
@@ -223,7 +236,7 @@ class FormController extends BaseController
         ], JSON_UNESCAPED_UNICODE);
     }
 
-    public function check($search_type='tender', $type=false)
+    public function check($search_type='auction', $type=false)
     {
         $out=0;
 
@@ -323,6 +336,21 @@ class FormController extends BaseController
 	public function get_status_data()
 	{
 		return $this->json('status');
+	}
+
+	public function get_award_criteria_data()
+	{
+		return $this->json('award_criteria');
+	}
+
+	public function get_procedure_data()
+	{
+		return $this->json('procedure');
+	}
+
+	public function get_cav_data()
+	{
+		return $this->json('cav');
 	}
 
 	private function get_tid_data()

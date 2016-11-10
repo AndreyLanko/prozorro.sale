@@ -9,17 +9,17 @@
 	
 		var query_types={
 			order: 200,
-			prefix: 'cpv',
+			prefix: 'cav',
 			pattern_search: pattern,
-			template: $('#block-cpv'),
+			template: $('#block-cav'),
 			json: {
-				check: '/form/check/cpv'
+				check: '/form/check/cav'
 			},
 			load: function(){
 				if(!json){
 					$.ajax({
 						method: 'POST',
-						url: LANG+'/form/data/cpv',
+						url: LANG+'/form/data/cav',
 						dataType: 'json',
 						headers: APP.utils.csrf(),
 						success: function(response){
